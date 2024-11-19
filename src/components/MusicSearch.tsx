@@ -5,7 +5,7 @@ import { YoutubeMusic } from "@/lib/interface/YTMusic";
 import { MusicSearchCard } from "./MusicSearchCard";
 import MusicSearchCardShimmer from "./MusicSearchCardShimmer";
 
-const MusicSearch = () => {
+const MusicSearch = ({ roomCode }: { roomCode: string }) => {
   const [search, setSearch] = useState("");
   const [musics, setMusics] = useState<YoutubeMusic[]>([]);
   const [resultsCardActive, setResultsCardActive] = useState<boolean>(false);
@@ -105,7 +105,11 @@ const MusicSearch = () => {
               role="listbox"
             >
               {musics.map((music) => (
-                <MusicSearchCard key={music.videoId} music={music} />
+                <MusicSearchCard
+                  roomCode={roomCode}
+                  key={music.videoId}
+                  music={music}
+                />
               ))}
             </ul>
           )}

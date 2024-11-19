@@ -26,6 +26,6 @@ model Room {
   roomCode      String   @id @unique
   owner_id      Int      @unique
   owner         User     @relation(fields: [owner_id], references: [id])
-  musicStack    String[]
+  musicQueue    String[]
   currentMusic  String?
 }

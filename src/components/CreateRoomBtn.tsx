@@ -4,6 +4,7 @@ import React from "react";
 import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import { createRoom } from "@/lib/actions/createRoom";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const CreateRoomBtn = () => {
   const router = useRouter();
@@ -13,9 +14,11 @@ const CreateRoomBtn = () => {
       containerClassName="rounded-full"
       as="button"
       onClick={async () => {
-        const roomCode = await createRoom();
-        if (roomCode) {
-          router.push(`/r/${roomCode}`);
+        const room = await createRoom();
+        if (room.success) {
+          router.push(`/r/${room.data}`);
+        } else {
+          toast.error(room.error);
         }
       }}
       className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"

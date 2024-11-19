@@ -20,8 +20,12 @@
     "next": "15.0.3",
     "next-auth": "^4.24.10",
     "prisma": "^5.22.0",
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0-rc2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
+    "react-toastify": "^10.0.6",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "ytmusic-api": "^5.2.2"

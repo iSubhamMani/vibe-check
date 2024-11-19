@@ -1,16 +1,16 @@
 import MainBg from "@/components/MainBg";
 import MusicDisplay from "@/components/MusicDisplay";
-import MusicStack from "@/components/MusicStack";
+import MusicQueue from "@/components/MusicQueue";
 import prisma from "@/lib/db";
 
 const Room = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const roomId = await prisma.room.findUnique({
+  const room = await prisma.room.findUnique({
     where: {
       roomCode: (await params).id,
     },
   });
 
-  if (!roomId) {
+  if (!room) {
     return (
       <MainBg>
         <div className="min-h-screen px-4 sm:px-6 w-full max-w-6xl mx-auto flex justify-center items-center">
@@ -25,8 +25,8 @@ const Room = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <MainBg>
       <div className="px-4 sm:px-6 w-full max-w-6xl mx-auto flex flex-col-reverse md:flex-row pt-6 md:pt-16 pb-6 gap-8 justify-between">
-        <MusicStack />
-        <MusicDisplay />
+        <MusicQueue roomCode={room.roomCode} />
+        <MusicDisplay roomCode={room.roomCode} />
       </div>
     </MainBg>
   );

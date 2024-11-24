@@ -7,7 +7,7 @@ import DashboardMain from "@/components/HomeMain";
 const Dashboard = () => {
   return (
     <MainBg>
-      <div className="mt-8 flex justify-end px-6 lg:px-12">
+      <div className="pt-8 flex justify-end px-6 lg:px-12">
         <LogoutBtn />
       </div>
       <div className="max-w-5xl mx-auto w-full">

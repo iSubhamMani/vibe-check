@@ -18,12 +18,7 @@ export const MusicSearchCard = ({
     <li
       onClick={async () => {
         const res = await addMusicToQueue(music.videoId, roomCode);
-
-        if (res.success) {
-          qc.invalidateQueries(`music-queue-${roomCode}`);
-        } else {
-          toast.error(res.error);
-        }
+        if (res.error) toast.error(res.error);
       }}
       key={music.videoId}
       className="rounded-md px-2 py-2 cursor-pointer hover:bg-indigo-50 hover:scale-95 transition-all duration-200 ease-in-out"

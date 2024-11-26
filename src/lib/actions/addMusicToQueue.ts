@@ -41,14 +41,28 @@ export async function addMusicToQueue(musicId: string, roomCode: string) {
       error: "Room not found",
     };
 
-  await prisma.room.update({
+  // check if music already exists in queue
+
+  const existingMusic = await prisma.music.findFirst({
     where: {
+      musicId,
       roomCode,
     },
+  });
+
+  if (existingMusic) {
+    return {
+      data: null,
+      error: "Music already exists in queue",
+      success: false,
+    };
+  }
+
+  await prisma.music.create({
     data: {
-      musicQueue: {
-        push: musicId,
-      },
+      musicId,
+      roomCode,
+      createdAt: new Date().toISOString(),
     },
   });
 

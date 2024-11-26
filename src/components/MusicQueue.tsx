@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { MusicCard } from "./MusicCard";
 import { useEffect } from "react";
 import { pusherClient } from "@/lib/pusher";
+import { Music } from "@/lib/interface/Music";
 
 const MusicQueue = ({ roomCode }: { roomCode: string }) => {
   const qc = useQueryClient();
@@ -15,6 +16,7 @@ const MusicQueue = ({ roomCode }: { roomCode: string }) => {
       const res = await axios.get(`/api/music-queue/${roomCode}`);
       return res.data.data;
     },
+    staleTime: Infinity,
   });
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const MusicQueue = ({ roomCode }: { roomCode: string }) => {
   }, [roomCode]);
 
   return (
-    <div className="flex-1 border pt-6 px-6 rounded-md shadow-sm bg-gradient-to-bl from-white to-indigo-100 h-[500px]">
+    <div className="flex-1 pt-6 px-6 rounded-md bg-white h-full overflow-hidden">
       <h1 className="font-bold text-2xl text-start pb-4">Up Next</h1>
       {isLoading && (
         <div className="flex justify-center my-4">
@@ -61,9 +63,12 @@ const MusicQueue = ({ roomCode }: { roomCode: string }) => {
           </svg>
         </div>
       )}
-      <ul className="py-1 overflow-auto max-h-[400px]" role="listbox">
-        {musics?.map((m: string) => {
-          return <MusicCard key={m} musicId={m} />;
+      <ul
+        className="py-1 overflow-y-auto h-full max-h-[500px] lg:max-h-[calc(100vh-100px)]"
+        role="listbox"
+      >
+        {musics?.map((m: Music) => {
+          return <MusicCard key={m.musicId} musicId={m.musicId} />;
         })}
       </ul>
     </div>

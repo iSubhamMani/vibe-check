@@ -101,7 +101,7 @@ const MusicSearch = ({ roomCode }: { roomCode: string }) => {
 
           {!loading && (
             <ul
-              className="py-1 overflow-auto max-h-[400px] px-2"
+              className="py-1 overflow-auto max-h-[400px] lg:max-h-[260px] px-2"
               role="listbox"
             >
               {musics.map((music) => (

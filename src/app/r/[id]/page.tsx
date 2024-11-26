@@ -25,30 +25,14 @@ const Room = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <MainBg>
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 md:pt-16 pb-6">
-        <div className="mb-6">
-          <button>
-            <Link href={"/dashboard"}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="#4f46e5"
-                className="size-6 md:size-7"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-            </Link>
-          </button>
-        </div>
-        <div className="flex flex-col-reverse lg:flex-row gap-8 justify-between">
-          <MusicQueue roomCode={room.roomCode} />
-          <MusicDisplay roomCode={room.roomCode} />
+      <div className="py-4 px-4 min-h-screen lg:h-screen flex">
+        <div className="w-full flex-1 rounded-md max-w-6xl mx-auto border flex flex-col-reverse lg:flex-row">
+          <div className="w-full flex-1 lg:w-2/5 md:border-r h-full">
+            <MusicQueue roomCode={room.roomCode} />
+          </div>
+          <div className="w-full lg:w-3/5 h-full">
+            <MusicDisplay roomCode={room.roomCode} />
+          </div>
         </div>
       </div>
     </MainBg>

@@ -16,10 +16,17 @@ export async function GET(req: NextRequest) {
 
     if (!room) throw new Error("Room not found");
 
+    const musicQueue = await prisma.music.findMany({
+      where: {
+        roomCode: room.roomCode,
+      },
+      orderBy: [{ votes: "desc" }, { createdAt: "asc" }],
+    });
+
     return NextResponse.json({
       success: true,
       error: null,
-      data: room.musicQueue,
+      data: musicQueue,
     });
   } catch (error) {
     return NextResponse.json({

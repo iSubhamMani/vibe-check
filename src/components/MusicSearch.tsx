@@ -4,6 +4,7 @@ import axios from "axios";
 import { YoutubeMusic } from "@/lib/interface/YTMusic";
 import { MusicSearchCard } from "./MusicSearchCard";
 import MusicSearchCardShimmer from "./MusicSearchCardShimmer";
+import { toast } from "react-toastify";
 
 const MusicSearch = ({ roomCode }: { roomCode: string }) => {
   const [search, setSearch] = useState("");
@@ -25,8 +26,8 @@ const MusicSearch = ({ roomCode }: { roomCode: string }) => {
       try {
         const musics = await axios.get(`/api/search-yt?query=${search}`);
         setMusics(musics.data.data);
-      } catch (error) {
-        console.log(error);
+      } catch {
+        toast.error("Error fetching musics");
       } finally {
         setLoading(false);
       }

@@ -16,7 +16,7 @@ export const MusicCard = ({
   roomCode: string;
   isVoted: boolean;
 }) => {
-  const { cachedResults } = useAppSelector((state) => state.musicCache);
+  const { cachedResults } = useAppSelector((state) => state.musicQueue);
   const music = cachedResults[musicId];
   const dispatch = useAppDispatch();
 

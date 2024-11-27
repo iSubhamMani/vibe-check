@@ -1,26 +1,33 @@
 import { YoutubeMusic } from "@/lib/interface/YTMusic";
 import { createSlice } from "@reduxjs/toolkit";
 
-const musicQueueSlice = createSlice({
-  name: "music-queue",
+const musicCachedResultsSlice = createSlice({
+  name: "musicCachedResults",
   initialState: {
-    queue: {} as Record<string, YoutubeMusic>,
+    cachedResults: {} as Record<string, YoutubeMusic>,
   },
   reducers: {
-    addMusicToQueue(state, action) {
-      if (!state.queue[action.payload.videoId]) {
-        state.queue[action.payload.videoId] = action.payload;
+    addMusicToCache(state, action) {
+      if (!state.cachedResults[action.payload.videoId]) {
+        state.cachedResults[action.payload.videoId] = action.payload;
       }
     },
-    removeMusicFromQueue(state, action) {
-      delete state.queue[action.payload];
+    setMusicCache(state, action) {
+      state.cachedResults = action.payload;
     },
-    clearMusicQueue(state) {
-      state.queue = {};
+    removeMusicFromCache(state, action) {
+      delete state.cachedResults[action.payload];
+    },
+    clearMusicCache(state) {
+      state.cachedResults = {};
     },
   },
 });
 
-export const { addMusicToQueue, removeMusicFromQueue, clearMusicQueue } =
-  musicQueueSlice.actions;
-export default musicQueueSlice.reducer;
+export const {
+  addMusicToCache,
+  setMusicCache,
+  removeMusicFromCache,
+  clearMusicCache,
+} = musicCachedResultsSlice.actions;
+export default musicCachedResultsSlice.reducer;

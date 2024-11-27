@@ -10,7 +10,7 @@ import { Music } from "@/lib/interface/Music";
 const MusicQueue = ({ roomCode }: { roomCode: string }) => {
   const qc = useQueryClient();
 
-  const { data: musics, isLoading } = useQuery({
+  const { data: musics, isFetching } = useQuery({
     queryKey: [`music-queue-${roomCode}`],
     queryFn: async () => {
       const res = await axios.get(`/api/music-queue/${roomCode}`);
@@ -39,7 +39,7 @@ const MusicQueue = ({ roomCode }: { roomCode: string }) => {
   return (
     <div className="flex-1 pt-6 px-6 rounded-md bg-white h-full overflow-hidden">
       <h1 className="font-bold text-2xl text-start pb-4">Up Next</h1>
-      {isLoading && (
+      {isFetching && (
         <div className="flex justify-center my-4">
           <svg
             className="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-500"
@@ -68,7 +68,14 @@ const MusicQueue = ({ roomCode }: { roomCode: string }) => {
         role="listbox"
       >
         {musics?.map((m: Music) => {
-          return <MusicCard key={m.musicId} musicId={m.musicId} />;
+          return (
+            <MusicCard
+              key={m.musicId}
+              isVoted={m.isVoted}
+              roomCode={roomCode}
+              musicId={m.musicId}
+            />
+          );
         })}
       </ul>
     </div>

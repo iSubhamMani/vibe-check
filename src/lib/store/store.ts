@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import musicCachedResultsSlice from "./slices/musicQueue";
+import musicQueueSlice from "./slices/musicQueue";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      musicCache: musicCachedResultsSlice,
+      musicQueue: musicQueueSlice,
     },
   });
 };

@@ -2,7 +2,6 @@
 import { addMusicToQueue } from "@/lib/actions/addMusicToQueue";
 import { YoutubeMusic } from "@/lib/interface/YTMusic";
 import Image from "next/image";
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 export const MusicSearchCard = ({
@@ -12,13 +11,15 @@ export const MusicSearchCard = ({
   music: YoutubeMusic;
   roomCode: string;
 }) => {
-  const qc = useQueryClient();
-
   return (
     <li
       onClick={async () => {
-        const res = await addMusicToQueue(music.videoId, roomCode);
-        if (res.error) toast.error(res.error);
+        try {
+          const res = await addMusicToQueue(music.videoId, roomCode);
+          if (res.error) toast.error(res.error);
+        } catch {
+          toast.error("Error adding music to queue");
+        }
       }}
       key={music.videoId}
       className="rounded-md px-2 py-2 cursor-pointer hover:bg-indigo-50 hover:scale-95 transition-all duration-200 ease-in-out"

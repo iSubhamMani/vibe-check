@@ -2,7 +2,6 @@ import MainBg from "@/components/MainBg";
 import MusicDisplay from "@/components/MusicDisplay";
 import MusicQueue from "@/components/MusicQueue";
 import prisma from "@/lib/db";
-import Link from "next/link";
 
 const Room = async ({ params }: { params: Promise<{ id: string }> }) => {
   const room = await prisma.room.findUnique({
@@ -30,7 +29,7 @@ const Room = async ({ params }: { params: Promise<{ id: string }> }) => {
           <div className="w-full flex-1 lg:w-2/5 md:border-r h-full">
             <MusicQueue roomCode={room.roomCode} />
           </div>
-          <div className="w-full lg:w-3/5 h-full">
+          <div className="w-full lg:w-3/5 lg:h-full">
             <MusicDisplay roomCode={room.roomCode} />
           </div>
         </div>

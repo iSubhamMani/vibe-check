@@ -3,20 +3,33 @@ import Image from "next/image";
 import { useEffect } from "react";
 import MusicCardShimmer from "./MusicCardShimmer";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
-import { addMusicToQueue } from "@/lib/store/slices/musicQueue";
+import { addMusicToCache } from "@/lib/store/slices/musicQueue";
+import { toast } from "react-toastify";
+import { voteMusic } from "@/lib/actions/voteMusic";
 
-export const MusicCard = ({ musicId }: { musicId: string }) => {
-  const { queue } = useAppSelector((state) => state.musicQueue);
-  const music = queue[musicId];
+export const MusicCard = ({
+  musicId,
+  roomCode,
+  isVoted,
+}: {
+  musicId: string;
+  roomCode: string;
+  isVoted: boolean;
+}) => {
+  const { cachedResults } = useAppSelector((state) => state.musicCache);
+  const music = cachedResults[musicId];
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     // check if music already exists in state
     if (!musicId || music) return;
     async function getMusicInfo() {
-      console.log("getting music info: ", musicId);
-      const res = await axios.get(`/api/search-yt/${musicId}`);
-      dispatch(addMusicToQueue(res.data.data));
+      try {
+        const res = await axios.get(`/api/search-yt/${musicId}`);
+        dispatch(addMusicToCache(res.data.data));
+      } catch {
+        toast.error("Error getting music info");
+      }
     }
     getMusicInfo();
   }, [musicId, music, dispatch]);
@@ -26,7 +39,7 @@ export const MusicCard = ({ musicId }: { musicId: string }) => {
   return (
     <li
       key={music.videoId}
-      className="flex justify-between items-start gap-4 px-2 py-2 my-2 mr-2 rounded-md transition-all duration-200 ease-in-out"
+      className="flex justify-between items-start gap-4 px-2 my-2 mr-2 rounded-md transition-all duration-200 ease-in-out"
     >
       <div className="flex flex-1 items-start gap-3">
         <Image
@@ -37,44 +50,39 @@ export const MusicCard = ({ musicId }: { musicId: string }) => {
           height={80}
         />
         <div className="flex flex-col">
-          <span className="line-clamp-2 font-medium text-base text-black">
+          <span className="line-clamp-2 font-medium text-sm md:text-base text-black">
             {music.name}
           </span>
-          <span className="text-sm text-slate-600 line-clamp-1">
+          <span className="text-xs md:text-sm text-slate-600 line-clamp-1">
             {music.artist.name}
           </span>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center gap-2">
-        <button className="hover:bg-indigo-100 rounded-full p-1">
+      <div>
+        <button
+          onClick={async () => {
+            try {
+              await voteMusic(musicId, roomCode);
+            } catch {
+              toast.error("Error voting music");
+            }
+          }}
+          className={`hover:bg-purple-100 ${
+            isVoted ? "bg-purple-100" : ""
+          } rounded-full p-1`}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-4"
+            stroke={`${isVoted ? "#9333ea" : "gray"}`}
+            className="size-5 md:size-6"
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="m4.5 15.75 7.5-7.5 7.5 7.5"
-            />
-          </svg>
-        </button>
-        <button className="hover:bg-indigo-100 rounded-full p-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-4"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m19.5 8.25-7.5 7.5-7.5-7.5"
+              d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
             />
           </svg>
         </button>

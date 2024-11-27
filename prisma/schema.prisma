@@ -32,7 +32,8 @@ model Room {
 model Music {
   id Int @id @default(autoincrement())
   musicId String
-  votes Int @default(0)
+  votes Int[]
+  votesCount Int @default(0)
   roomCode String
   createdAt DateTime
 }

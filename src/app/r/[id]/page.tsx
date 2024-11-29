@@ -1,9 +1,14 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/config";
 import MainBg from "@/components/MainBg";
 import MusicDisplay from "@/components/MusicDisplay";
 import MusicQueue from "@/components/MusicQueue";
+import MusicSearch from "@/components/MusicSearch";
 import prisma from "@/lib/db";
+import { getServerSession } from "next-auth";
 
 const Room = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const session = await getServerSession(authOptions);
+
   const room = await prisma.room.findUnique({
     where: {
       roomCode: (await params).id,
@@ -22,6 +27,14 @@ const Room = async ({ params }: { params: Promise<{ id: string }> }) => {
     );
   }
 
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session?.user?.email ?? undefined,
+    },
+  });
+
+  const isRoomOwner = room.owner_id === user?.id;
+
   return (
     <MainBg>
       <div className="py-4 px-4 min-h-screen lg:h-screen flex">
@@ -30,7 +43,10 @@ const Room = async ({ params }: { params: Promise<{ id: string }> }) => {
             <MusicQueue roomCode={room.roomCode} />
           </div>
           <div className="w-full lg:w-3/5 lg:h-full">
-            <MusicDisplay roomCode={room.roomCode} />
+            <div className="rounded-md h-full pt-6 px-6 bg-white">
+              {isRoomOwner && <MusicDisplay roomCode={room.roomCode} />}
+              <MusicSearch roomCode={room.roomCode} />
+            </div>
           </div>
         </div>
       </div>

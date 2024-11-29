@@ -5,6 +5,8 @@ const musicQueueSlice = createSlice({
   name: "musicQueue",
   initialState: {
     cachedResults: {} as Record<string, YoutubeMusic>,
+    queue: [] as string[],
+    currentMusic: null as string | null,
   },
   reducers: {
     addMusicToCache(state, action) {
@@ -12,8 +14,8 @@ const musicQueueSlice = createSlice({
         state.cachedResults[action.payload.videoId] = action.payload;
       }
     },
-    setMusicCache(state, action) {
-      state.cachedResults = action.payload;
+    setMusicQueue(state, action) {
+      state.queue = action.payload;
     },
     removeMusicFromCache(state, action) {
       delete state.cachedResults[action.payload];
@@ -21,13 +23,21 @@ const musicQueueSlice = createSlice({
     clearMusicCache(state) {
       state.cachedResults = {};
     },
+    setCurrentMusic(state, action) {
+      state.currentMusic = action.payload;
+    },
+    clearCurrentMusic(state) {
+      state.currentMusic = null;
+    },
   },
 });
 
 export const {
   addMusicToCache,
-  setMusicCache,
   removeMusicFromCache,
   clearMusicCache,
+  setMusicQueue,
+  setCurrentMusic,
+  clearCurrentMusic,
 } = musicQueueSlice.actions;
 export default musicQueueSlice.reducer;

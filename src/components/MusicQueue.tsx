@@ -6,15 +6,21 @@ import { MusicCard } from "./MusicCard";
 import { useEffect } from "react";
 import { pusherClient } from "@/lib/pusher";
 import { Music } from "@/lib/interface/Music";
+import { useAppDispatch } from "@/lib/store/hook";
+import { setMusicQueue } from "@/lib/store/slices/musicQueue";
 
 const MusicQueue = ({ roomCode }: { roomCode: string }) => {
   const qc = useQueryClient();
+  const dispatch = useAppDispatch();
 
   const { data: musics, isFetching } = useQuery({
     queryKey: [`music-queue-${roomCode}`],
     queryFn: async () => {
       const res = await axios.get(`/api/music-queue/${roomCode}`);
-      return res.data.data;
+      const musics = res.data.data as Music[];
+      const musicIds = musics.map((music) => music.musicId);
+      dispatch(setMusicQueue(musicIds));
+      return musics;
     },
     staleTime: Infinity,
   });

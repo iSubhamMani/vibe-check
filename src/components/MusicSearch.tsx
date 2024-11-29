@@ -42,7 +42,7 @@ const MusicSearch = ({ roomCode }: { roomCode: string }) => {
 
   return (
     <div className="relative">
-      <div className="rounded-full px-4 flex items-center gap-2 border focus:border-indigo-600 border-indigo-300">
+      <div className="rounded-full px-4 flex items-center gap-2 border-2 focus:border-indigo-700 border-indigo-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

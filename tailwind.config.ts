@@ -73,6 +73,22 @@ export default {
   },
   plugins: [
     addVariablesForColors,
+    function ({
+      addBase,
+    }: {
+      addBase: (baseStyles: Record<string, any>) => void;
+    }) {
+      addBase({
+        "input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button":
+          {
+            "-webkit-appearance": "none",
+            margin: "0",
+          },
+        "input[type=number]": {
+          appearance: "textfield",
+        },
+      });
+    },
     function ({ matchUtilities, theme }: any) {
       matchUtilities(
         {

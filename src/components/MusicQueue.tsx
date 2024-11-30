@@ -55,7 +55,9 @@ const MusicQueue = ({ roomCode }: { roomCode: string }) => {
 
   return (
     <div className="flex-1 pt-6 px-6 rounded-md bg-white h-full overflow-hidden">
-      <h1 className="font-bold text-2xl text-start pb-4">Up Next</h1>
+      <h1 className="font-bold text-2xl text-start pb-4 text-indigo-600">
+        Up Next
+      </h1>
       {isFetching && (
         <div className="flex justify-center my-4">
           <Spinner className="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-500" />

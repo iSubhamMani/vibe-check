@@ -10,10 +10,10 @@ export default function Landing() {
           <TextGenerateEffect
             duration={0.8}
             words="Vibe Check"
-            className="text-3xl md:text-4xl lg:text-7xl drop-shadow-2xl text-[#bbdff3]"
+            className="text-4xl md:text-5xl lg:text-7xl drop-shadow-2xl text-[#bbdff3]"
           />
 
-          <p className="mt-6 text-lg md:text-xl lg:text-3xl bg-clip-text text-transparent drop-shadow-xl bg-gradient-to-b from-white/80 to-white/60">
+          <p className="text-balance mt-6 text-xl md:text-2xl lg:text-3xl bg-clip-text text-transparent drop-shadow-xl bg-gradient-to-b from-white/80 to-white/60">
             Your Music, Your Vibe. Let the Crowd Decide.
           </p>
           <SignInButton />

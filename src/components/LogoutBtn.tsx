@@ -37,10 +37,10 @@ const LogoutBtn = () => {
             <p>Are you sure you want to logout?</p>
           </ModalContent>
           <ModalFooter className="flex gap-4">
-            <div className="flex gap-2 items-center rounded-md shadow-md px-3 py-2 xl:px-4 xl:py-2 border border-purple-200 hover:bg-indigo-100 transition-all duration-200 ease-in-out">
+            <div className="flex gap-2 items-center rounded-md shadow-md border border-purple-200 hover:bg-indigo-100 transition-all duration-200 ease-in-out">
               <button
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="font-medium text-xs xl:text-sm"
+                className="font-medium text-xs xl:text-sm px-3 py-2 xl:px-4 xl:py-2"
               >
                 Yes
               </button>

@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/config";
+import EndRoomBtn from "@/components/EndRoomBtn";
 import MainBg from "@/components/MainBg";
 import MusicDisplay from "@/components/MusicDisplay";
 import MusicQueue from "@/components/MusicQueue";
@@ -44,6 +45,13 @@ const Room = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
           <div className="w-full lg:w-3/5 lg:h-full">
             <div className="rounded-md h-full pt-6 px-6 bg-white">
+              <div className="flex justify-between items-center mb-4">
+                <p className="bg-white text-black px-2 py-1 rounded-md text-base font-bold">
+                  Room code:{" "}
+                  <span className="text-indigo-700">{room.roomCode}</span>
+                </p>
+                {isRoomOwner && <EndRoomBtn roomCode={room.roomCode} />}
+              </div>
               {isRoomOwner && <MusicDisplay roomCode={room.roomCode} />}
               <MusicSearch roomCode={room.roomCode} />
             </div>

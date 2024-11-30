@@ -45,7 +45,9 @@ const VideoPlayer = ({ roomCode }: { roomCode: string }) => {
         width: "",
         videoId: currentMusic,
         playerVars: {
-          autoplay: 1, // Enable autoplay
+          autoplay: 1, // Enable autoplay,
+          fs: 0,
+          rel: 0,
         },
         events: {
           onStateChange: handlePlayerStateChange,

@@ -12,12 +12,7 @@ export async function GET(req: NextRequest) {
 
     const session = await getServerSession(authOptions);
 
-    if (!session || !session.user)
-      return {
-        data: null,
-        error: "Unauthenticated",
-        success: false,
-      };
+    if (!session || !session.user) throw new Error("Unauthorized");
 
     const currentUser = await prisma.user.findUnique({
       where: {
@@ -25,12 +20,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    if (!currentUser)
-      return {
-        data: null,
-        error: "User not found",
-        success: false,
-      };
+    if (!currentUser) throw new Error("User not found");
 
     const room = await prisma.room.findFirst({
       where: {

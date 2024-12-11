@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     const ytmusic = new YTMusic();
     await ytmusic.initialize();
 
-    const response = await ytmusic.getSong(musicId);
+    const response = await ytmusic.getVideo(musicId);
 
     return NextResponse.json({
       success: true,

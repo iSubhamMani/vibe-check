@@ -1,5 +1,5 @@
+import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
-import YTMusic from "ytmusic-api";
 
 export async function GET(req: NextRequest) {
   try {
@@ -8,14 +8,32 @@ export async function GET(req: NextRequest) {
 
     if (!musicId) throw new Error("Music ID is required");
 
-    const ytmusic = new YTMusic();
-    await ytmusic.initialize();
+    const ytApiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,topicDetails&id=${musicId}&key=${process.env.GOOGLE_API_KEY}`;
 
-    const response = await ytmusic.getVideo(musicId);
+    const res = await axios.get(ytApiUrl);
+
+    const musicDetails = {
+      type: "SONG",
+      name: res.data.items[0].snippet.title,
+      videoId: musicId,
+      artist: {
+        artistId: null,
+        name: res.data.items[0].snippet.channelTitle,
+      },
+      album: null,
+      duration: res.data.items[0].contentDetails.duration,
+      thumbnails: [
+        {
+          url: res.data.items[0].snippet.thumbnails.standard.url,
+          width: res.data.items[0].snippet.thumbnails.standard.width,
+          height: res.data.items[0].snippet.thumbnails.standard.height,
+        },
+      ],
+    };
 
     return NextResponse.json({
       success: true,
-      data: response,
+      data: musicDetails,
       error: null,
     });
   } catch (error) {

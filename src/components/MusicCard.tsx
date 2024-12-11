@@ -43,7 +43,7 @@ export const MusicCard = ({
     >
       <div className="flex flex-1 items-start gap-3">
         <Image
-          src={music?.thumbnails[1 || 0]?.url ?? ""}
+          src={music.thumbnails[0].url}
           alt={`${music.name} thumbnail`}
           className="w-[80px] h-[80px] rounded-md object-cover shadow-md"
           width={80}

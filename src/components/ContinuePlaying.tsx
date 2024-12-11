@@ -47,7 +47,7 @@ const ContinuePlaying = ({
         <div className="mt-4 flex justify-between items-start gap-4 rounded-md transition-all duration-200 ease-in-out">
           <div className="flex flex-1 items-start gap-3">
             <Image
-              src={music?.thumbnails[1 || 0]?.url ?? ""}
+              src={music?.thumbnails[0]?.url}
               alt={`${music.name} thumbnail`}
               className="w-[60px] h-[60px] rounded-md object-cover shadow-md"
               width={60}
